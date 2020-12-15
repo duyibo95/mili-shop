@@ -11,21 +11,21 @@ const instance = axios.create({
 
 // 全局请求拦截,网络请求之前触发
 instance.interceptors.request.use(
-  function(config) {
+  function (config) {
     config.headers.authorization = "Bearer " + localStorage.getItem("token");
     return config;
   },
-  function(error) {
+  function (error) {
     return Promise.reject(error);
   }
 );
 
-// 全局响应拦截,网络请求之后触发
+// 全局响应拦截, 网络请求之后触发
 instance.interceptors.response.use(
-  function(response) {
+  function (response) {
     return response.data;
   },
-  function(error) {
+  function (error) {
     if (error && error.message.indexOf("timeout") > -1) {
       Notify({ type: "warning", message: "网络超时啦,待会再试试吧~" });
     }

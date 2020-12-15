@@ -6,7 +6,7 @@
         <van-tabbar-item icon="wap-home" :to="{ name: 'Home' }"
           >主页</van-tabbar-item
         >
-        <van-tabbar-item icon="diamond" :to="{ name: 'Group' }"
+        <van-tabbar-item icon="cluster" :to="{ name: 'Group' }"
           >分类</van-tabbar-item
         >
         <van-tabbar-item icon="shopping-cart" :to="{ name: 'Cart' }"

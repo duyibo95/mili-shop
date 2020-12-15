@@ -35,6 +35,21 @@ const routes = [
     name: 'Cart',
     component: () => import('../views/Cart/Cart.vue')
   },
+  {
+    path: '/reg',
+    name: 'Reg',
+    component: () => import('../views/User/Reg.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/User/Login.vue')
+  },
+  {
+    path: '/editProfile',
+    name: 'EditProfile',
+    component: () => import('../views/User/editProfile.vue')
+  },
 ]
 
 const router = new VueRouter({

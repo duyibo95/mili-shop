@@ -1,12 +1,161 @@
 <template>
+  <!-- 个人中心 -->
   <div class="user">
-    <h1>user</h1>
+    <!-- 头像 -->
+    <div class="udt">
+      <div class="box-img">
+        <img :src="avatar" alt="" />
+      </div>
+      <span>{{ nickName }}</span>
+    </div>
+    <!-- 用户 -->
+    <van-cell class="vciti" title="我的订单" is-link to="/" />
+    <van-grid clickable :column-num="4">
+      <van-grid-item icon="send-gift-o" text="待付款" to="/" />
+      <van-grid-item icon="gift-card-o" text="待收货" to="/" />
+      <van-grid-item icon="smile-comment-o" text="评价" to="/" />
+      <van-grid-item icon="balance-list-o" text="退款/售后" to="/" />
+    </van-grid>
+    <van-cell
+      class="vciti"
+      icon="edit"
+      title="修改个人信息"
+      is-link
+      :to="{ name: 'EditProfile' }"
+    />
+    <van-cell class="vciti" icon="manager-o" title="我的权益" is-link to="/" />
+    <van-cell
+      class="vciti"
+      icon="coupon-o"
+      title="优惠券"
+      is-link
+      to="/couponList"
+    />
+    <van-cell
+      class="vciti"
+      icon="label-o"
+      title="我的收藏"
+      is-link
+      to="/cart"
+    />
+    <van-cell
+      class="vciti"
+      icon="location-o"
+      title="地址管理"
+      is-link
+      to="/site"
+    />
+    <van-cell class="vciti" icon="manager-o" title="资质证照" is-link to="/" />
+    <van-button plain type="primary" @click="quit" class="vbpt"
+      >退出登录</van-button
+    >
   </div>
 </template>
 
 <script>
-export default {};
+import { loadUserInfo } from "../../utils/userInfo";
+import { Dialog } from "vant";
+import { Toast } from "vant";
+export default {
+  data() {
+    return {
+      nickName: "",
+      id: "",
+      avatar: "",
+    };
+  },
+  computed: {},
+  watch: {},
+  methods: {
+    async loadUser() {
+      const res = await loadUserInfo();
+      this.id = res._id;
+      this.nickName = res.nickName;
+      this.userName = res.userName;
+      this.avatar = res.avatar;
+    },
+    quit() {
+      Dialog.confirm({
+        title: "退出登录",
+        message: "确定要退出登录吗",
+      })
+        .then(() => {
+          // on confirm
+          Toast.loading({
+            duration: 1000,
+            message: "正在安全退出",
+            forbidClick: true,
+            loadingType: "spinner",
+          });
+          setTimeout(() => {
+            Toast.success({
+              message: "退出成功",
+            });
+            localStorage.clear();
+            this.$router.push({
+              name: "Login",
+            });
+          }, 1000);
+        })
+        .catch(() => {
+          // on cancel
+        });
+    },
+  },
+  created() {
+    this.loadUser();
+  },
+  mounted() {},
+  beforeCreate() {},
+  beforeMount() {},
+  beforeUpdate() {},
+  updated() {},
+  beforeDestroy() {},
+  destroyed() {},
+  activated() {},
+  components: {},
+};
 </script>
 
-<style>
+<style scoped>
+.user {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+.vciti {
+  margin-bottom: 0.125rem;
+}
+.vbpt {
+  width: 6.25rem;
+  height: 2.8125rem;
+  display: block;
+  margin: 0 auto;
+}
+.udt {
+  width: 100%;
+  height: 5rem;
+  background: url(https://m.mi.com/static/img/bg.63c8e19851.png) center 0
+    #f37d0f;
+  background-size: 100% 100%;
+  padding-top: 1.2rem;
+  padding-left: 1.2rem;
+  display: flex;
+}
+.box-img {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.box-img > img {
+  width: 4.5rem;
+  border: #ffff6f;
+}
+.udt span {
+  margin-left: 1.5rem;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
 </style>
