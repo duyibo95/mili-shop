@@ -10,4 +10,4 @@ export function gerToken() {
 export function setToken(v) {
   return localStorage.setItem("token", v);
 }
-export const serverUrl = "http://192.168.11.103:3009";
+export const serverUrl = "localhost:3009";
