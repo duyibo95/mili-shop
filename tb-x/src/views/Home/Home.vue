@@ -124,6 +124,7 @@ export default {
         "http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/4bd3dde9e8c82e87e3f4342de038d897.jpg?thumb=1&w=720&h=360",
         "http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/fcfc2e1245bbf972d4eb29a4528488d2.jpg?thumb=1&w=720&h=360",
       ],
+      value: "",
     };
   },
 };

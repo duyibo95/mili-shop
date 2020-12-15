@@ -27,6 +27,13 @@
       is-link
       :to="{ name: 'EditProfile' }"
     />
+    <van-cell
+      class="vciti"
+      icon="info-o"
+      title="修改密码"
+      is-link
+      :to="{ name: 'ChangePassword' }"
+    />
     <van-cell class="vciti" icon="manager-o" title="我的权益" is-link to="/" />
     <van-cell
       class="vciti"

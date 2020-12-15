@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Notify } from "vant";
-import { serverUrl } from "../utils/tools";
+import { serverUrl } from "./tools";
 
 /* 超时时间 */
 const instance = axios.create({

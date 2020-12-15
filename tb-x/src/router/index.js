@@ -15,11 +15,7 @@ const routes = [
     name: 'List',
     component: () => import('../views/List/List.vue')
   },
-  {
-    path: '/reg',
-    name: 'Reg',
-    component: () => import('../views/User/Reg.vue')
-  },
+
   {
     path: '/user',
     name: 'User',
@@ -54,6 +50,11 @@ const routes = [
     path: '/editProfile',
     name: 'EditProfile',
     component: () => import('../views/User/editProfile.vue')
+  },
+  {
+    path: '/changePassword',
+    name: 'ChangePassword',
+    component: () => import('../views/User/changePassword.vue')
   },
 ]
 
