@@ -13,7 +13,7 @@
           placeholder="请输入搜索关键词"
           style="width: 80%"
         />
-        <van-button type="default" class="vbtti"
+        <van-button type="default" class="vbtti" @click="onClickRight"
           ><van-icon name="contact" size="25px"
         /></van-button>
       </div>
@@ -26,54 +26,54 @@
     </van-swipe>
     <!-- 商品分类部分 -->
     <van-grid :border="false" :column-num="5">
-      <van-grid-item>
+      <van-grid-item to="/user">
         <van-image
           src="http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/cb65daec7ef7b52cc785f88f78efba37.png?w=216&h=228&bg=FDF1E6"
         />
       </van-grid-item>
-      <van-grid-item>
+      <van-grid-item to="/user">
         <van-image
           src="http://i8.mifile.cn/v1/a1/eb5024fe-dfe3-6e53-3e18-675bef5fa06e.webp?w=216&h=228&bg=EAF6FD"
         />
       </van-grid-item>
-      <van-grid-item>
+      <van-grid-item to="/user">
         <van-image
           src="http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/d436f30612651fffe1d6c5aaa3fdb816.png?f=webp&w=216&h=228&bg=FFFFFF"
         />
       </van-grid-item>
-      <van-grid-item>
+      <van-grid-item to="/user">
         <van-image
           src="http://i8.mifile.cn/v1/a1/e8bc849a-0a3b-21a0-6810-7da3a3903dee.webp?w=216&h=228&bg=FDEFDE"
         />
       </van-grid-item>
-      <van-grid-item>
+      <van-grid-item to="/user">
         <van-image
           src="http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/eb4cbd9dabf2c2aef15e43f5bcab5cb9.jpg?f=webp&w=216&h=228&bg=FFFFFF"
         />
       </van-grid-item>
     </van-grid>
     <van-grid :border="false" :column-num="5">
-      <van-grid-item>
+      <van-grid-item to="/user">
         <van-image
           src="http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/64f3988b6216e4c1ab62a7f50df3e816.png?f=webp&w=216&h=228&bg=FFFFFF"
         />
       </van-grid-item>
-      <van-grid-item>
+      <van-grid-item to="/user">
         <van-image
           src="http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/9ea68dee2bfa0e55a82236b0d968e975.png?w=216&h=228&bg=FCEAEA"
         />
       </van-grid-item>
-      <van-grid-item>
+      <van-grid-item to="/user">
         <van-image
           src="http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/96c780016ea196743905dc93f9249c39.png?w=216&h=228&bg=FDF5E5"
         />
       </van-grid-item>
-      <van-grid-item>
+      <van-grid-item to="/user">
         <van-image
           src="http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/9425031cdd7af22d9a23a5ae16d1f57c.jpg?f=webp&w=216&h=228&bg=FFFFFF"
         />
       </van-grid-item>
-      <van-grid-item>
+      <van-grid-item to="/user">
         <van-image
           src="http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/f11f9df6b0b0b428f8c8fc3267131830.png?w=216&h=228&bg=FDEDE8"
         />
@@ -112,7 +112,16 @@
         alt=""
         class="hsyy"
     /></van-button>
-    <!-- 每日精选手机 -->
+    <!-- 每日精选 -->
+    <div class="mrjx">
+      <div v-for="item in list" :key="item" class="mrjxd">
+        <img :src="item.coverImg" alt="" />
+        <p>{{ item.name }}</p>
+        <div style="width: 80%; display: flex; justify-content: space-between">
+          <b>{{ item.price }}</b> <van-icon name="cart-o" size="30px" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -120,12 +129,23 @@
 export default {
   data() {
     return {
+      list: [],
       banners: [
         "http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/4bd3dde9e8c82e87e3f4342de038d897.jpg?thumb=1&w=720&h=360",
         "http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/fcfc2e1245bbf972d4eb29a4528488d2.jpg?thumb=1&w=720&h=360",
       ],
       value: "",
     };
+  },
+  created() {
+    fetch("http://localhost:3009/api/v1/products")
+      .then((res) => res.json())
+      .then((res) => (this.list = res.products));
+  },
+  methods: {
+    onClickRight() {
+      this.$router.replace("/user");
+    },
   },
 };
 </script>
@@ -144,7 +164,6 @@ export default {
 .vsiic {
   width: 100%;
 }
-
 .vrtj img {
   width: 100%;
 }
@@ -161,5 +180,28 @@ export default {
   width: 100%;
   height: 100%;
   margin: 0 auto;
+}
+.mrjx {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.mrjxd {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.mrjxd img {
+  width: 100%;
+}
+.mrjxd p {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>
