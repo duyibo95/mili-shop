@@ -8,7 +8,7 @@
       </div>
       <span>{{ nickName }}</span>
       <div class="box-x" v-show="show">
-        <img src="../../assets/avatar.76a75b8f17.png" alt="" />
+        <img src="../../assets/min/avatar.76a75b8f17.png" alt="" />
         <p @click="log">登录/注册</p>
       </div>
     </div>
@@ -34,7 +34,13 @@
       is-link
       :to="{ name: 'ChangePassword' }"
     />
-    <van-cell class="vciti" icon="manager-o" title="我的权益" is-link to="/" />
+    <van-cell
+      icon="delete"
+      title="清除缓存"
+      :value="cache"
+      @click="eliminate"
+    />
+
     <van-cell
       class="vciti"
       icon="coupon-o"
@@ -56,7 +62,7 @@
       is-link
       to="/site"
     />
-    <van-cell class="vciti" icon="manager-o" title="资质证照" is-link to="/" />
+    <van-cell class="vciti" icon="manager-o" title="关于我们" is-link to="/" />
     <van-button plain type="primary" @click="quit" class="vbpt"
       >退出登录</van-button
     >
@@ -74,6 +80,7 @@ export default {
       id: "",
       avatar: "",
       show: false,
+      cache: "",
     };
   },
   computed: {},
@@ -85,6 +92,21 @@ export default {
       this.nickName = res.nickName;
       this.userName = res.userName;
       this.avatar = res.avatar;
+    },
+    caches() {
+      this.cache = (Math.random() * 9.7).toFixed(2) + "M";
+    },
+    eliminate() {
+      Toast.loading({
+        duration: 4000,
+        message: "正在清除...",
+        forbidClick: true,
+        overlay: true,
+      });
+      setTimeout(() => {
+        this.cache = 0 + "M";
+        Toast.success("清除成功");
+      }, 500);
     },
     quit() {
       Dialog.confirm({
@@ -132,16 +154,8 @@ export default {
     }
 
     this.loadUser();
+    this.caches();
   },
-  mounted() {},
-  beforeCreate() {},
-  beforeMount() {},
-  beforeUpdate() {},
-  updated() {},
-  beforeDestroy() {},
-  destroyed() {},
-  activated() {},
-  components: {},
 };
 </script>
 

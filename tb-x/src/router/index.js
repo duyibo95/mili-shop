@@ -56,6 +56,7 @@ const routes = [
     name: 'ChangePassword',
     component: () => import('../views/User/changePassword.vue')
   },
+
 ]
 
 const router = new VueRouter({
