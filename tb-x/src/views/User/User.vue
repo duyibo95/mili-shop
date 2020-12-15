@@ -7,6 +7,10 @@
         <img :src="avatar" alt="" />
       </div>
       <span>{{ nickName }}</span>
+      <div class="box-x" v-show="show">
+        <img src="../../assets/avatar.76a75b8f17.png" alt="" />
+        <p @click="log">登录/注册</p>
+      </div>
     </div>
     <!-- 用户 -->
     <van-cell class="vciti" title="我的订单" is-link to="/" />
@@ -62,6 +66,7 @@ export default {
       nickName: "",
       id: "",
       avatar: "",
+      show: false,
     };
   },
   computed: {},
@@ -101,8 +106,24 @@ export default {
           // on cancel
         });
     },
+    log() {
+      Toast.success({
+        message: "即将进入登陆界面",
+      });
+      setTimeout(() => {
+        this.$router.push({
+          name: "Login",
+        });
+      }, 2000);
+    },
   },
   created() {
+    if (localStorage.getItem("token")) {
+      this.show = false;
+    } else {
+      this.show = true;
+    }
+
     this.loadUser();
   },
   mounted() {},
@@ -141,6 +162,7 @@ export default {
   padding-top: 1.2rem;
   padding-left: 1.2rem;
   display: flex;
+  position: relative;
 }
 .box-img {
   width: 4.5rem;
@@ -157,5 +179,24 @@ export default {
   color: #ffffff;
   font-weight: 600;
   font-size: 1.5rem;
+}
+.box-x {
+  position: absolute;
+  top: 15%;
+  left: 5%;
+  height: 5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.box-x > img {
+  width: 4.5rem;
+  height: 4.5rem;
+}
+.box-x > p {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-left: 10%;
 }
 </style>
