@@ -44,6 +44,15 @@
     <div class="guess">
       <img src="../../assets/min/e95ade2750a7fde92369b416c7d3176d.jpg" alt="" />
     </div>
+    <!-- 底部商品推荐 -->
+    <div class="cartTuiJian">
+      <div v-for="item in list" :key="item - id" class="cartTuiJianDiv">
+        <img :src="item.pic_url" alt="" class="ctjdi" />
+        <b class="ctjdb">{{ item.name }}</b
+        ><br />
+        <p class="ctjdp">${{ item.price_min }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -53,6 +62,7 @@ export default {
   data() {
     return {
       show: "",
+      list: [],
     };
   },
   methods: {
@@ -77,6 +87,9 @@ export default {
       this.show = false;
       console.log(1);
     }
+    fetch("https://www.xiaomiyoupin.com/homepage/main/v1002?platform=pc")
+      .then((res) => res.json())
+      .then((res) => (this.list = res.data.recommend.floors[0].data));
   },
 };
 </script>
@@ -174,5 +187,29 @@ body,
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+.cartTuiJian {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-between;
+}
+.cartTuiJianDiv {
+  width: 46%;
+}
+.ctjdi {
+  width: 100%;
+}
+.ctjdb {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+.ctjdp {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+  color: red;
+  text-align: center;
 }
 </style>
