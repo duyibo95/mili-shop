@@ -46,7 +46,7 @@
     </div>
     <!-- 底部商品推荐 -->
     <div class="cartTuiJian">
-      <div v-for="item in list" :key="item - id" class="cartTuiJianDiv">
+      <div v-for="item in list" :key="item.gid" class="cartTuiJianDiv">
         <img :src="item.pic_url" alt="" class="ctjdi" />
         <b class="ctjdb">{{ item.name }}</b
         ><br />
@@ -192,6 +192,8 @@ body,
   display: flex;
   flex-flow: wrap;
   justify-content: space-between;
+  background-color: #ffffff;
+  font-size: 0.875rem;
 }
 .cartTuiJianDiv {
   width: 46%;
