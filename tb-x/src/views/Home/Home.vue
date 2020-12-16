@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <div id="top"></div>
     <!-- 首页顶部搜索栏 -->
     <van-sticky>
       <div class="homeNav">
@@ -137,6 +138,9 @@
         </div>
       </van-list>
     </van-pull-refresh>
+    <div class="top">
+      <a href="#top"><van-icon name="back-top" /></a>
+    </div>
   </div>
 </template>
 
@@ -205,6 +209,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  position: relative;
 }
 .home {
   width: 100%;
@@ -267,5 +272,19 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-around;
+}
+.top {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  bottom: 15%;
+  right: 10%;
+  font-size: 1.6rem;
+  border: 2px solid #c1e4e9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #eaf4fc;
 }
 </style>

@@ -11,7 +11,7 @@ export function addToCart(product, num) {
 export function loadCarts() {
   return get('/api/v1/shop_carts');
 }
-
+// 根据id删除商品
 export function delpro(id) {
   return delate('/api/v1/shop_carts/' + id);
 }
