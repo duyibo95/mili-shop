@@ -78,6 +78,4 @@ export default {
   flex: 1;
   border-right: 0.0625rem solid #9999;
 }
-.wrap li {
-}
 </style>
