@@ -64,6 +64,7 @@ export default {
       avatar: "",
     };
   },
+
   methods: {
     async onSubmit() {
       if (this.password === this.repwd) {
@@ -100,6 +101,13 @@ export default {
       this.avatar = file.content;
       console.log(file.content);
     },
+  },
+
+  beforeMount() {
+    this.$store.commit("HideMaizuoTab", false);
+  },
+  beforeDestroy() {
+    this.$store.commit("HideMaizuoTab", true);
   },
 };
 </script>

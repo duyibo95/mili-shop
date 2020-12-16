@@ -68,6 +68,12 @@ export default {
       }
     },
   },
+  beforeMount() {
+    this.$store.commit("HideMaizuoTab", false);
+  },
+  beforeDestroy() {
+    this.$store.commit("HideMaizuoTab", true);
+  },
 };
 </script>
 
