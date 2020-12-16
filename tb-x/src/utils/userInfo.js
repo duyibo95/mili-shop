@@ -1,4 +1,4 @@
-import { get, post } from "./request";
+import { get, post, put } from "./request";
 /* 获取用户信息 */
 export function loadUserInfo() {
   return get("/api/v1/users/info");
@@ -17,6 +17,24 @@ export function modifyUserPassword(oldPassword, password) {
     password,
   });
 }
-export function uploadUserAvatar(file) {
-  return post("/api/v1/common/file_upload", file);
+// 收货地址列表
+export function addList() {
+  return get("/api/v1/addresses");
+}
+// 获取单条收货地址
+export function AnAddress() {
+  return get("/api/v1/addresses/:id");
+}
+// 收货地址新增
+export function newAddress(params) {
+  return post("/api/v1/addresses", params
+  );
+}
+// 收货地址修改
+export function editAddress(params) {
+  return put("/api/v1/addresses/:id", params);
+}
+// 收货地址删除
+export function delAddress() {
+  return post("/api/v1/addresses/:id");
 }

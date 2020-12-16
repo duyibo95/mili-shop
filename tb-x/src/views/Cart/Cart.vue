@@ -38,6 +38,7 @@
         :price="sumPrice * 100"
         button-text="提交订单"
         v-show="!kong"
+        @submit="onSubmit"
       >
         <van-checkbox v-model="checked">全选</van-checkbox>
       </van-submit-bar>
@@ -124,6 +125,8 @@ export default {
           // on cancel
         });
     },
+    // 提交订单
+    onSubmit() {},
     // 返回首页购物
     stroll() {
       this.$router.push({
