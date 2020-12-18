@@ -9,11 +9,15 @@
             src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1607943406818&di=d5c5321a4f651de840dfe75697fe7ada&imgtype=0&src=http%3A%2F%2Fimg.ui.cn%2Fdata%2Ffile%2F9%2F2%2F4%2F922429.gif%3FimageMogr2%2Fauto-orient%2Fstrip%2Fthumbnail%2F%25211800%253E"
             alt=""
         /></van-button>
-        <van-search
-          v-model="value"
-          placeholder="请输入搜索关键词"
-          style="width: 80%"
-        />
+        <form action="/">
+          <van-search
+            v-model="value"
+            show-action
+            placeholder="请输入搜索关键词"
+            @search="onSearch"
+            @cancel="onCancel"
+          />
+        </form>
         <van-button type="default" class="vbtti" @click="onClickRight"
           ><van-icon name="contact" size="25px"
         /></van-button>
@@ -145,6 +149,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 import { loadProducts } from "../../services/cart/products";
 export default {
   data() {
@@ -195,6 +200,19 @@ export default {
       // 将 loading 设置为 true，表示处于加载状态
       this.loading = true;
       this.onLoad();
+    },
+
+    onSearch(val) {
+      this.$router.push({
+        path: "/searchList",
+        query: {
+          val,
+        },
+      }),
+        Toast(val);
+    },
+    onCancel() {
+      Toast("取消");
     },
     onClickRight() {
       this.$router.replace("/user");

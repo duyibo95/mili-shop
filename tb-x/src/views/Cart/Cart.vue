@@ -37,7 +37,7 @@
 
       <van-submit-bar
         :price="sumPrice * 100"
-        button-text="提交订单"
+        button-text="立即结算"
         v-show="!kong"
         @submit="onSubmit"
       >
@@ -45,11 +45,17 @@
         <van-icon name="delete" v-show="checked" @click="dels" />
       </van-submit-bar>
 
+      <van-number-keyboard
+        v-model="value"
+        :show="showKeyboard"
+        @blur="showKeyboard = false"
+      />
+
       <van-notice-bar color="#949494" background="#FFFFFF" v-show="show">
         温馨提示:产品是否购买成功，以最终下单为准，请尽快结算。
       </van-notice-bar>
     </div>
-    <div class="Address" v-for="i in Address" :key="i._id">
+    <div class="Address" v-for="i in Address" :key="i._id" v-show="!kong">
       <van-cell
         icon="logistics"
         :title="i.address"
@@ -68,9 +74,17 @@
       <span>购物车还是空的</span>
       <p @click="stroll">去逛逛</p>
     </div>
+
     <div class="guess">
       <img src="../../assets/min/e95ade2750a7fde92369b416c7d3176d.jpg" alt="" />
     </div>
+    <van-password-input
+      :value="value"
+      :error-info="errorInfo"
+      :focused="showKeyboard"
+      @focus="showKeyboard = true"
+      v-show="isShow"
+    />
     <!-- 底部商品推荐 -->
     <div class="cartTuiJian">
       <div v-for="item in rmdList" :key="item.gid" class="cartTuiJianDiv">
@@ -85,9 +99,15 @@
 
 <script>
 // import { mapMutations, mapGetters } from "vuex";
-import { Dialog } from "vant";
+import { Dialog, Toast } from "vant";
 import { gerToken } from "../../utils/tools";
-import { loadCarts, addToCart, delpro, delpros } from "../../utils/carts";
+import {
+  loadCarts,
+  addToCart,
+  delpro,
+  delpros,
+  submit,
+} from "../../utils/carts";
 import { addList } from "../../utils/userInfo";
 
 export default {
@@ -100,6 +120,11 @@ export default {
       ids: [],
       orderDetails: [],
       Address: [],
+
+      value: "",
+      errorInfo: "",
+      showKeyboard: false,
+      isShow: false,
     };
   },
 
@@ -151,10 +176,20 @@ export default {
         return item._id;
       });
       console.log(this.ids);
-      await delpros(this.ids);
-      this.addCarts();
+      Dialog.confirm({
+        title: "删除",
+        message: "你确定要删除全部商品吗？",
+      })
+        .then(async () => {
+          // on confirm
+          await delpros(this.ids);
+          this.addCarts();
+        })
+        .catch(() => {
+          // on cancel
+        });
     },
-    // 收获地址？
+    // 获取收货地址
     async getaddressList() {
       const res = await addList();
       let aList = res.addresses;
@@ -165,13 +200,43 @@ export default {
     },
     // 提交订单
     onSubmit() {
-      this.orderDetails = this.list.filter((v) => v.checked);
+      this.showKeyboard = true;
+      this.isShow = true;
+    },
+    async submits() {
+      let m = [];
+      m = this.list.filter((v) => v.checked);
+      this.orderDetails = m.map((item) => {
+        return {
+          quantity: item.quantity,
+          product: item._id,
+          price: item.product.price,
+          id: item._id,
+        };
+      });
       console.log(this.orderDetails);
 
-      //    this.ids = this.list.map((item) => {
-      //   return item._id;
-      // });
+      const res = await submit({
+        receiver: this.Address[0].receiver,
+        regions: this.Address[0].regions,
+        address: this.Address[0].address,
+        orderDetails: this.orderDetails,
+      });
+      console.log(res);
+      if (res.code == "success") {
+        this.showKeyboard = false;
+        this.isShow = false;
+        Toast.success("订单提交成功");
+
+        this.$router.push({
+          name: "Order",
+        });
+      }
+      this.ids = this.list.map((item) => {
+        return item._id;
+      });
     },
+
     // 修改地址
     goAddress() {
       this.$router.push({
@@ -192,6 +257,16 @@ export default {
     },
   },
 
+  watch: {
+    value(value) {
+      if (value.length === 6 && value == "336699") {
+        this.submits();
+        this.errorInfo = "密码正确";
+      } else {
+        this.errorInfo = "密码错误";
+      }
+    },
+  },
   computed: {
     // ...mapGetters(["getQuantity"]),
     checked: {
@@ -244,6 +319,9 @@ body,
 }
 .van-submit-bar {
   bottom: 50px;
+}
+.cart {
+  position: relative;
 }
 .cart-head {
   display: flex;
@@ -385,5 +463,12 @@ body,
 }
 .van-cell__title {
   line-height: 0.8rem;
+}
+.van-password-input {
+  position: absolute;
+  bottom: 37%;
+  background: white;
+  width: 100%;
+  margin: 0;
 }
 </style>

@@ -71,7 +71,16 @@ const routes = [
     name: 'EditAddress',
     component: () => import('../views/User/EditAddress.vue')
   },
-
+  {
+    path: '/order',
+    name: 'Order',
+    component: () => import('../views/Cart/Order.vue')
+  },
+  {
+    path: '/searchList',
+    name: 'SearchList',
+    component: () => import('../views/Home/searchList.vue')
+  },
 ]
 
 const router = new VueRouter({

@@ -25,3 +25,11 @@ export function delpros(ids) {
 export function submit(data) {
   return post('/api/v1/orders', data);
 }
+// 获取订单列表
+export function orderList(params) {
+  return get('/api/v1/orders', params);
+}
+// 根据 id 删除订单详情
+export function delateOrder(id) {
+  return delate('/api/v1/orders/' + id);
+}
