@@ -17,8 +17,8 @@
     <van-empty description="暂无订单" v-show="show" />
     <!-- 个人信息及地址部分 -->
     <div class="box" v-for="(data, i) in list" :key="data._id + i">
-      <div class="site">
-        <div class="site-s">
+      <div class="zffs">
+        <div class="xzzffs">
           <b>{{ data.receiver }}</b>
           <p>{{ data.regions }}</p>
           <p>{{ data.address }}</p>
@@ -161,3 +161,26 @@ body,
   font-size: 2rem;
 }
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
