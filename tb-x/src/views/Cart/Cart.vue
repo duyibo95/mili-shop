@@ -34,6 +34,7 @@
           <van-icon name="delete" />
         </div>
       </div>
+
       <van-submit-bar
         :price="sumPrice * 100"
         button-text="提交订单"
@@ -41,12 +42,21 @@
         @submit="onSubmit"
       >
         <van-checkbox v-model="checked">全选</van-checkbox>
+        <van-icon name="delete" v-show="checked" @click="dels" />
       </van-submit-bar>
-    </div>
-    <van-notice-bar color="#949494" background="#FFFFFF" v-show="show">
-      温馨提示:产品是否购买成功，以最终下单为准，请尽快结算。
-    </van-notice-bar>
 
+      <van-notice-bar color="#949494" background="#FFFFFF" v-show="show">
+        温馨提示:产品是否购买成功，以最终下单为准，请尽快结算。
+      </van-notice-bar>
+    </div>
+    <div class="Address" v-for="i in Address" :key="i._id">
+      <van-cell
+        icon="logistics"
+        :title="i.address"
+        value="修改"
+        @click="goAddress"
+      />
+    </div>
     <van-cell
       title="登陆后享受更多优惠"
       value="去登陆>"
@@ -74,9 +84,12 @@
 </template>
 
 <script>
+// import { mapMutations, mapGetters } from "vuex";
 import { Dialog } from "vant";
 import { gerToken } from "../../utils/tools";
-import { loadCarts, addToCart, delpro } from "../../utils/carts";
+import { loadCarts, addToCart, delpro, delpros } from "../../utils/carts";
+import { addList } from "../../utils/userInfo";
+
 export default {
   data() {
     return {
@@ -84,6 +97,9 @@ export default {
       rmdList: [],
       list: [],
       kong: "",
+      ids: [],
+      orderDetails: [],
+      Address: [],
     };
   },
 
@@ -92,7 +108,9 @@ export default {
     async addCarts() {
       let res = await loadCarts();
       this.list = res;
+      // this.AddQuantity(this.list.length);
       console.log(this.list);
+      // this.dels();
       if (this.list.length === 0) {
         this.kong = true;
       }
@@ -106,6 +124,8 @@ export default {
         }
       });
     },
+    // ...mapMutations(["AddQuantity"]),
+
     // 根据id删除购物车商品
     delatePro(id) {
       Dialog.confirm({
@@ -125,8 +145,39 @@ export default {
           // on cancel
         });
     },
+    // 删除购物车全部商品
+    async dels() {
+      this.ids = this.list.map((item) => {
+        return item._id;
+      });
+      console.log(this.ids);
+      await delpros(this.ids);
+      this.addCarts();
+    },
+    // 收获地址？
+    async getaddressList() {
+      const res = await addList();
+      let aList = res.addresses;
+      console.log(aList);
+      this.Address.push(aList.find((item) => item.isDefault == true));
+      console.log(this.Address);
+      console.log(this.Address[0].address);
+    },
     // 提交订单
-    onSubmit() {},
+    onSubmit() {
+      this.orderDetails = this.list.filter((v) => v.checked);
+      console.log(this.orderDetails);
+
+      //    this.ids = this.list.map((item) => {
+      //   return item._id;
+      // });
+    },
+    // 修改地址
+    goAddress() {
+      this.$router.push({
+        name: "AddressList",
+      });
+    },
     // 返回首页购物
     stroll() {
       this.$router.push({
@@ -140,7 +191,9 @@ export default {
       });
     },
   },
+
   computed: {
+    // ...mapGetters(["getQuantity"]),
     checked: {
       set(flag) {
         return this.list.forEach((item) => (item.checked = flag));
@@ -173,7 +226,7 @@ export default {
       console.log(1);
     }
     this.addCarts();
-
+    this.getaddressList();
     fetch("https://www.xiaomiyoupin.com/homepage/main/v1002?platform=pc")
       .then((res) => res.json())
       .then((res) => (this.rmdList = res.data.recommend.floors[0].data));
@@ -313,5 +366,24 @@ body,
   margin: 0 auto;
   color: red;
   text-align: center;
+}
+.van-submit-bar__bar i {
+  font-size: 1.5rem;
+  margin-left: 2%;
+}
+.van-cell {
+  margin: 0;
+  padding: 0;
+  height: 40px;
+  align-items: center;
+}
+.van-cell i {
+  font-size: 1.5rem;
+}
+.van-cell__title span {
+  font-size: 0.8rem;
+}
+.van-cell__title {
+  line-height: 0.8rem;
 }
 </style>

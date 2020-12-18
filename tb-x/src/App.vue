@@ -22,15 +22,19 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations, mapGetters } from "vuex";
 export default {
   data() {
     return {
       active: 0,
     };
   },
+  methods: {
+    ...mapMutations(["getCardCount"]),
+  },
   computed: {
     ...mapState(["isTabShow"]),
+    ...mapGetters(["getQuantity"]),
   },
 };
 </script>

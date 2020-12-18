@@ -70,6 +70,11 @@ const routes = [
     name: 'Address',
     component: () => import('../views/User/Address.vue')
   },
+  {
+    path: '/editAddress',
+    name: 'EditAddress',
+    component: () => import('../views/User/EditAddress.vue')
+  },
 
 ]
 

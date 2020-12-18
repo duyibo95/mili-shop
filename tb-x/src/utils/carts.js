@@ -15,3 +15,13 @@ export function loadCarts() {
 export function delpro(id) {
   return delate('/api/v1/shop_carts/' + id);
 }
+// 删除购物车全部商品
+export function delpros(ids) {
+  return post('/api/v1/shop_carts/delmany', {
+    ids
+  });
+}
+// 提交订单
+export function submit(data) {
+  return post('/api/v1/orders', data);
+}
