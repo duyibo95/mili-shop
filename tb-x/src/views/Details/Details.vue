@@ -3,6 +3,7 @@
     <div class="head">
       <van-icon name="arrow-left" @click="gobackHandle()" />
     </div>
+
     <div class="middle">
       <div class="ban">
         <div class="cent">
@@ -62,7 +63,7 @@
 
     <van-goods-action>
       <van-goods-action-icon icon="chat-o" text="客服" dot />
-      <van-goods-action-icon icon="cart-o" text="购物车" badge="5" />
+      <van-goods-action-icon icon="cart-o" text="购物车" :badge="getQuantity" />
       <van-goods-action-icon icon="star" text="收藏" color="#ff5000" />
       <van-goods-action-button
         type="warning"
@@ -79,6 +80,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { Toast } from "vant";
 import { Dialog } from "vant";
 import { loadProductDetails } from "../../services/cart/products";
@@ -121,6 +123,7 @@ export default {
         const result = await addToCart(detList._id, 1);
         if (result.code == "success") {
           Toast.success("加入成功");
+          this.$store.commit("getCardCount", 1);
         }
       } else {
         Dialog({ message: "请登录后再使用哦" });
@@ -157,11 +160,15 @@ export default {
       this.$router.back();
     },
   },
+
   beforeMount() {
     this.$store.commit("HideMaizuoTab", false);
   },
   beforeDestroy() {
     this.$store.commit("HideMaizuoTab", true);
+  },
+  computed: {
+    ...mapGetters(["getQuantity"]),
   },
 };
 </script>
