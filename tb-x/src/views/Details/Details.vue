@@ -118,6 +118,7 @@ export default {
       const res = await loadProductDetails(this.id);
       this.detList = res;
     },
+    // 加入购物车
     async addCart(detList) {
       if (gerToken()) {
         const result = await addToCart(detList._id, 1);

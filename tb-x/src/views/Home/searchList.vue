@@ -85,6 +85,7 @@ export default {
     console.log(this.value);
   },
   methods: {
+    // 加载数据库数据
     async productList() {
       this.loading = true;
       for (var i = 1; i < 10; i++) {
@@ -94,11 +95,13 @@ export default {
 
       console.log(this.lists);
     },
+    // 根据搜索框搜索数据
     onSearch(val) {
       return (this.list = this.lists.filter(
         (item) => item.name.indexOf(val) > -1
       ));
     },
+    // 高低排序
     sort() {
       console.log(this.value2);
       if (this.value2 == "b") {

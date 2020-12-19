@@ -54,10 +54,11 @@ export default {
   },
 
   methods: {
+    // 后退
     clickLeft() {
       this.$router.back(-1);
     },
-
+    // 获取地址信息
     async getThisAddress() {
       let res = await AnAddress(this.$route.query.id);
       console.log(res);
@@ -69,7 +70,7 @@ export default {
       this.addressInfo.postalCode = "451150";
       this.addressInfo.areaCode = "410102";
     },
-
+    // 修改地址信息
     async onEdit(res) {
       console.log(res);
       await editAddress(res.id, {

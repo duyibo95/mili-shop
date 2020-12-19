@@ -13,7 +13,7 @@
       </div>
     </div>
     <!-- 用户 -->
-    <van-cell class="vciti" title="我的订单" is-link to="/" />
+    <van-cell class="vciti" title="我的订单" is-link to="/order" />
     <van-grid clickable :column-num="4">
       <van-grid-item icon="send-gift-o" text="待付款" to="/" />
       <van-grid-item icon="gift-card-o" text="待收货" to="/" />
@@ -96,6 +96,7 @@ export default {
     caches() {
       this.cache = (Math.random() * 9.7).toFixed(2) + "M";
     },
+    // 清除缓存（5万块）特效
     eliminate() {
       Toast.loading({
         duration: 4000,
@@ -108,6 +109,7 @@ export default {
         Toast.success("清除成功");
       }, 500);
     },
+    // 退出登录
     quit() {
       Dialog.confirm({
         title: "退出登录",

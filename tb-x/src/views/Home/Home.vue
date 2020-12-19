@@ -172,6 +172,7 @@ export default {
     this.productList();
   },
   methods: {
+    // 获取商品列表
     async productList() {
       this.loading = true;
       const res = await loadProducts(this.page);
@@ -184,6 +185,7 @@ export default {
       this.refreshing = false;
       this.loading = false;
     },
+    // 判断数据是否加载完毕，关闭请求
     onLoad() {
       if (this.pages < this.page) {
         console.log(1);
@@ -192,6 +194,7 @@ export default {
         this.productList();
       }
     },
+    // 下拉刷新
     onRefresh() {
       // 清空列表数据
       this.finished = false;
@@ -201,7 +204,7 @@ export default {
       this.loading = true;
       this.onLoad();
     },
-
+    // 搜索
     onSearch(val) {
       this.$router.push({
         path: "/searchList",

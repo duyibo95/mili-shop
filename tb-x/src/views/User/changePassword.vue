@@ -40,12 +40,14 @@ export default {
     this.loadInfo();
   },
   methods: {
+    // 获取用户信息，原密码
     async loadInfo() {
       const res = await loadUserInfo();
       this.oldPasswords = res.password;
       // this.password = res.
       console.log(res);
     },
+    // 修改密码
     async onSubmit() {
       const result = await modifyUserPassword(this.oldPassword, this.password);
       if (result.code == "success") {

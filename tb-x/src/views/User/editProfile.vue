@@ -32,11 +32,13 @@ export default {
     this.info();
   },
   methods: {
+    // 获取用户信息
     async info() {
       const res = await loadUserInfo();
       this.nickName = res.nickName;
       this.avatar = res.avatar;
     },
+    // 修改用户信息
     async onSubmit() {
       const result = await modifyUserInfo(this.nickName, this.avatar);
       if (result.code == "success") {
