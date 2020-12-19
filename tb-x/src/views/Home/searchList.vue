@@ -23,8 +23,21 @@
     </van-sticky>
     <van-dropdown-menu>
       <van-dropdown-item v-model="value1" :options="option1" />
-      <van-dropdown-item v-model="value2" :options="option2" />
+      <van-dropdown-item v-model="value2" :options="option2" @change="sort" />
     </van-dropdown-menu>
+    <div class="box">
+      <div class="mrjx">
+        <div v-for="(v, i) in lista" :key="v._id + i" class="mrjxd">
+          <router-link :to="{ name: 'Details', query: { id: v._id } }">
+            <img :src="v.coverImg | dalImg" alt="" />
+          </router-link>
+          <p>{{ v.name }}</p>
+          <div class="mr">
+            <b>{{ v.price }}</b> <van-icon name="cart-o" size="30px" />
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="box">
       <div class="mrjx">
         <div v-for="(v, i) in list" :key="v._id + i" class="mrjxd">
@@ -50,6 +63,7 @@ export default {
       value: "",
       list: [],
       lists: [],
+      lista: [],
       page: 1,
       value1: 0,
       value2: "a",
@@ -60,8 +74,8 @@ export default {
       ],
       option2: [
         { text: "默认排序", value: "a" },
-        { text: "好评排序", value: "b" },
-        { text: "销量排序", value: "c" },
+        { text: "从高到底", value: "b" },
+        { text: "从低到高", value: "c" },
       ],
     };
   },
@@ -80,10 +94,29 @@ export default {
 
       console.log(this.lists);
     },
-    ss() {
-      this.list = this.datalist.filter((item) => item.indexOf(this.value) > -1);
+    onSearch(val) {
+      return (this.list = this.lists.filter(
+        (item) => item.name.indexOf(val) > -1
+      ));
     },
-
+    sort() {
+      console.log(this.value2);
+      if (this.value2 == "b") {
+        console.log(1);
+        this.list.sort((a, b) => {
+          console.log(2);
+          return a.price - b.price;
+        });
+      } else {
+        this.list.sort((a, b) => {
+          console.log(2);
+          return b.price - a.price;
+        });
+      }
+      console.log(this.list);
+      this.lista = this.list;
+      // this.onSearch(this.val);
+    },
     onCancel() {
       Toast("取消");
     },
@@ -91,11 +124,7 @@ export default {
       this.$router.replace("/user");
     },
   },
-  computed: {
-    onSearch(val) {
-      return (this.list = this.lists.filter((item) => item.indexOf(val) > -1));
-    },
-  },
+  computed: {},
 };
 </script>
 

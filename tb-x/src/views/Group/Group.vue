@@ -27,6 +27,7 @@
                 name: 'List',
                 query: {
                   class: '小米手机',
+                  product_category: '5fcf69c07fc5aa239cd5d68a',
                 },
               }"
             >
