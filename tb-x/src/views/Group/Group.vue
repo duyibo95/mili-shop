@@ -4,13 +4,7 @@
       <div class="header-left" @click="clickLeft">
         <van-icon name="arrow-left" size="22px" color="#fff" />
       </div>
-      <div class="header-right">
-        <input type="text" placeholder="请输入要搜索的商品" /><van-icon
-          name="search"
-          color="#fff"
-          size="22"
-        />
-      </div>
+      <div class="header-right">商品分类</div>
     </header>
     <van-tree-select
       height="100%"
@@ -239,7 +233,7 @@ export default {
 .header {
   height: 48px;
   width: 100%;
-  background: linear-gradient(#e66465, #ff461f);
+  background: #ff4c00;
   z-index: 9999;
   margin-bottom: 3px;
   box-shadow: 0 2px 2px rgba(5, 16, 20, 0.24), 0 0 4px rgba(10, 16, 20, 0.12);
@@ -260,15 +254,8 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
-}
-
-.header-right input {
-  width: 75%;
-  height: 62%;
-  border-radius: 18px;
-  border: 0;
-  outline: none;
-  padding-left: 23px;
+  color: #ffffff;
+  font-weight: 700;
 }
 
 .van-sidebar {

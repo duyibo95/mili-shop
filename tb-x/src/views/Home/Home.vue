@@ -254,7 +254,7 @@ body {
 }
 .vbtti {
   width: 60px;
-  height: 60px;
+  height: 55px;
   border: #ffffff;
 }
 .vbtti img {

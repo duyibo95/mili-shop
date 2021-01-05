@@ -7,6 +7,7 @@
         <van-icon name="search" />
       </div>
     </van-sticky>
+    <!-- 获取购物车列表 -->
     <div class="goods-list">
       <div class="goods" v-for="(data, i) in list" :key="data._id + i">
         <van-checkbox
@@ -55,14 +56,17 @@
         温馨提示:产品是否购买成功，以最终下单为准，请尽快结算。
       </van-notice-bar>
     </div>
-    <div class="Address" v-for="i in Address" :key="i._id" v-show="!kong">
-      <van-cell
-        icon="logistics"
-        :title="i.address"
-        value="修改"
-        @click="goAddress"
-      />
+    <div v-if="Address[0]">
+      <div class="Address" v-for="i in Address" :key="i._id" v-show="!kong">
+        <van-cell
+          icon="logistics"
+          :title="i.address"
+          value="修改"
+          @click="goAddress"
+        />
+      </div>
     </div>
+
     <van-cell
       title="登陆后享受更多优惠"
       value="去登陆>"
@@ -196,7 +200,7 @@ export default {
       console.log(aList);
       this.Address.push(aList.find((item) => item.isDefault == true));
       console.log(this.Address);
-      console.log(this.Address[0].address);
+      // console.log(this.Address[0].address);
     },
     // 提交订单
     onSubmit() {
