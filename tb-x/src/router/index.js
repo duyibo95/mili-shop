@@ -85,6 +85,11 @@ const routes = [
     name: 'SearchList',
     component: () => import('../views/Home/searchList.vue')
   },
+  {
+    path: '/collect',
+    name: 'Collect',
+    component: () => import('../views/User/Collect.vue')
+  },
 ]
 
 const router = new VueRouter({

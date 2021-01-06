@@ -136,7 +136,8 @@
             </router-link>
             <p>{{ v.name }}</p>
             <div class="mr">
-              <b>{{ v.price }}</b> <van-icon name="cart-o" size="30px" />
+              <b>{{ v.price }}</b>
+              <van-icon name="cart-o" size="30px" @click="addCart(v._id)" />
             </div>
           </div>
         </div>
@@ -149,8 +150,10 @@
 </template>
 
 <script>
-import { Toast } from "vant";
+import { Toast, Dialog } from "vant";
 import { loadProducts } from "../../services/cart/products";
+import { gerToken } from "../../utils/tools";
+import { addToCart } from "../../utils/carts";
 export default {
   data() {
     return {
@@ -203,6 +206,22 @@ export default {
       // 将 loading 设置为 true，表示处于加载状态
       this.loading = true;
       this.onLoad();
+    },
+    // 加入购物车
+    async addCart(id) {
+      if (gerToken()) {
+        const result = await addToCart(id, 1);
+        if (result.code == "success") {
+          Toast.success("加入成功");
+        }
+      } else {
+        Dialog({ message: "请登录后再使用哦" });
+        setTimeout(() => {
+          this.$router.push({
+            name: "Login",
+          });
+        }, 1000);
+      }
     },
     // 搜索
     onSearch(val) {

@@ -64,7 +64,12 @@
     <van-goods-action>
       <van-goods-action-icon icon="chat-o" text="客服" dot />
       <van-goods-action-icon icon="cart-o" text="购物车" :badge="getQuantity" />
-      <van-goods-action-icon icon="star" text="收藏" color="#ff5000" />
+      <van-goods-action-icon
+        icon="star"
+        text="收藏"
+        @click="addFav"
+        :color="favs.indexOf(this.id) > -1 ? 'crimson' : ''"
+      />
       <van-goods-action-button
         type="warning"
         text="加入购物车"
@@ -86,6 +91,7 @@ import { Dialog } from "vant";
 import { loadProductDetails } from "../../services/cart/products";
 import { addToCart } from "../../utils/carts";
 import { gerToken } from "../../utils/tools";
+import { addToFav, loadFavs } from "../../utils/fav";
 const coupon = {
   available: 1,
   condition: "无使用门槛\n最多优惠1200元",
@@ -106,11 +112,13 @@ export default {
       disabledCoupons: [coupon],
       showList: false,
       id: this.$route.query.id,
+      favs: [],
     };
   },
   created() {
     this.LoadDetails();
     console.log(this.id);
+    this.favs = loadFavs();
   },
   methods: {
     // 加载商品详情
@@ -135,6 +143,12 @@ export default {
         }, 1000);
       }
     },
+    // 商品收藏
+    addFav() {
+      addToFav(this.id);
+      this.favs = loadFavs();
+    },
+
     // 通知栏
     onChange(index) {
       this.showList = false;

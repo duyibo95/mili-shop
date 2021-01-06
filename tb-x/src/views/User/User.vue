@@ -53,7 +53,7 @@
       icon="label-o"
       title="我的收藏"
       is-link
-      to="/cart"
+      to="/collect"
     />
     <van-cell
       class="vciti"
@@ -63,6 +63,7 @@
       to="/addressList"
     />
     <van-cell class="vciti" icon="manager-o" title="关于我们" is-link to="/" />
+
     <van-button plain type="primary" @click="quit" class="vbpt"
       >退出登录</van-button
     >
